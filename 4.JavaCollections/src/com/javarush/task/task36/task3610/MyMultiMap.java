@@ -15,9 +15,8 @@ public class MyMultiMap<K, V> extends HashMap<K, V> implements Cloneable, Serial
 
     @Override
     public int size() {
-        //напишите тут ваш код
         int size = 0;
-        for (List<V> list: map.values()) {
+        for (List<V> list : map.values()) {
             size += list.size();
         }
         return size;
@@ -25,32 +24,67 @@ public class MyMultiMap<K, V> extends HashMap<K, V> implements Cloneable, Serial
 
     @Override
     public V put(K key, V value) {
-        //напишите тут ваш код
+        if (map.containsKey(key)) {
+            if (map.get(key).size() < repeatCount) {
+                map.get(key).add(value);
+                return map.get(key).get(map.get(key).size() - 2);
+            } else {
+                List<V> list = map.get(key);
+                list.add(value);
+                list.remove(0);
+                return list.get(repeatCount - 2);
+            }
+        } else {
+            map.put(key, new ArrayList<V>() {{
+                add(value);
+            }});
+            return null;
+        }
     }
 
     @Override
     public V remove(Object key) {
-        //напишите тут ваш код
+        if (map.get(key) != null) {
+            List<V> list = map.get(key);
+            V temp = list.remove(0);
+            if (list.isEmpty()) {
+                map.remove(key);
+            }
+            return temp;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public Set<K> keySet() {
-        //напишите тут ваш код
+        return map.keySet();
     }
 
     @Override
     public Collection<V> values() {
-        //напишите тут ваш код
+        List<V> list = new ArrayList<>();
+        for (Map.Entry<K, List<V>> entry : map.entrySet()) {
+            list.addAll(entry.getValue());
+        }
+        return list;
     }
 
     @Override
     public boolean containsKey(Object key) {
-        //напишите тут ваш код
+        return map.containsKey(key);
     }
 
     @Override
     public boolean containsValue(Object value) {
-        //напишите тут ваш код
+        for (Map.Entry<K, List<V>> entry : map.entrySet()) {
+            for (V v : entry.getValue()) {
+                if (v.equals(value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
