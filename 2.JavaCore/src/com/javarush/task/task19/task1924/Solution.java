@@ -39,7 +39,6 @@ public class Solution {
         } catch (IOException ignore) {
             /* NOP */
         }
-
         String fileLine;
         ArrayList<String> fileContent = new ArrayList<>();
 
@@ -50,7 +49,6 @@ public class Solution {
         } catch (IOException ignore) {
             /* NOP */
         }
-
         for (String line : fileContent) {
             String[] splitedLine = line.split(" ");
             for (int i = 0; i < splitedLine.length; i++) {
@@ -64,12 +62,10 @@ public class Solution {
                     }
                 }
             }
-
             StringBuffer sbLine = new StringBuffer();
             for (String word : splitedLine) {
                 sbLine.append(word).append(" ");
             }
-
             System.out.println(sbLine.toString().trim());
         }
     }
