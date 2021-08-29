@@ -8,6 +8,9 @@ public class Person {
     private String lastName;
     private Date birthDate;
 
+    private int x;
+    private int y;
+
     public Person(String firstName, String middleName, String lastName, Date birthDate) {
         this.firstName = firstName;
         this.middleName = middleName;
