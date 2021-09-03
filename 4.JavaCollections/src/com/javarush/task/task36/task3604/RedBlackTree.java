@@ -21,7 +21,7 @@ public class RedBlackTree {
     }
 
     public boolean isEmpty() {
-        return header.left == EMPTY;
+        return header.right == EMPTY;
     }
 
     public void clear() {
@@ -37,7 +37,7 @@ public class RedBlackTree {
             parent = current;
             current = item > current.element ? current.right : current.left;
 
-            if (current.left.color == Color.RED && current.right.color == Color.BLACK) {
+            if (current.left.color == Color.RED && current.right.color == Color.RED) {
                 reorient(item);
             }
         }
@@ -88,21 +88,21 @@ public class RedBlackTree {
         }
     }
 
-    private Node rotateWithLeftNode(Node element) {
-        Node left = element.left;
-        element.left = left.right;
-        left.right = element;
-        return left;
+    private Node rotateWithLeftNode(Node k2) {
+        Node k1 = k2.left;
+        k2.left = k1.right;
+        k1.right = k2;
+        return k1;
     }
 
-    private Node rotateWithRightNode(Node element) {
-        Node left = element.left;
-        element.left = left.right;
-        left.right = element;
-        return left;
+    private Node rotateWithRightNode(Node k1) {
+        Node k2 = k1.right;
+        k1.right = k2.left;
+        k2.left = k1;
+        return k2;
     }
 
-    public static enum Color {
+    public enum Color {
         BLACK,
         RED
     }
