@@ -5,6 +5,7 @@ import com.javarush.task.task26.task2613.exception.InterruptOperationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ConsoleHelper {
@@ -68,7 +69,7 @@ public class ConsoleHelper {
             ConsoleHelper.writeMessage("\t 2 - " + res.getString("operation.DEPOSIT"));
             ConsoleHelper.writeMessage("\t 3 - " + res.getString("operation.WITHDRAW"));
             ConsoleHelper.writeMessage("\t 4 - " + res.getString("operation.EXIT"));
-            Integer i = Integer.parseInt(ConsoleHelper.readString().trim());
+            Integer i = Integer.parseInt(Objects.requireNonNull(ConsoleHelper.readString()).trim());
             try {
                 return Operation.getAllowableOperationByOrdinal(i);
             } catch (IllegalArgumentException e) {
