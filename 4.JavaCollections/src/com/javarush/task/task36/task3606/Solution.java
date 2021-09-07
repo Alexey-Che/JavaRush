@@ -27,10 +27,38 @@ public class Solution {
     }
 
     public void scanFileSystem() throws ClassNotFoundException {
+        File dir = new File(packageName);
+        ClassLoader classLoader = Solution.class.getClassLoader();
+        for (String fileName : dir.list()) {
+            if (fileName.endsWith(".class")) {
+                String className = packageName.replaceAll("[/\\\\]", ".").substring(packageName.lastIndexOf("ru/")) + "." + fileName.substring(0, fileName.length() - 6);
+                Class<?> aClass = classLoader.loadClass(className);
+                hiddenClasses.add(aClass);
+            }
+        }
     }
 
     public HiddenClass getHiddenClassObjectByKey(String key) {
+        String lowerKey = key.toLowerCase();
+        try {
+            Class resultClass = null;
+            for (Class aClass : hiddenClasses) {
+                if (aClass.getSimpleName().toLowerCase().startsWith(lowerKey)) {
+                    resultClass = aClass;
+                    Constructor<?> declaredConstructor = resultClass.getDeclaredConstructor();
+                    declaredConstructor.setAccessible(true);
+                    return (HiddenClass) declaredConstructor.newInstance();
+                }
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
-
